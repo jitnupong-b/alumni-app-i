@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2'
 
 @Component({
@@ -8,26 +9,35 @@ import Swal from 'sweetalert2'
 })
 export class LoginComponent implements OnInit {
 
-  inputEmail: any;
-  inputPassword: any;
+  email: any;
+  password: any;
 
-  constructor() { }
+  loginForm: FormGroup | any;
+
+  constructor() {
+    this.loginForm = new FormGroup({
+      inputEmail: new FormControl('', [
+        Validators.required,
+        Validators.email]),
+      inputPassword: new FormControl('', [
+        Validators.required,
+        Validators.minLength(6)
+      ])
+    });
+  }
 
   ngOnInit(): void {
+
   }
 
   onSubmitEmailPassword() {
-    if (this.inputEmail != "mana.rak@excise.go.th" || this.inputPassword != '12345678') {
-      Swal.fire({
-        title: 'เกิดข้อผิดพลาด',
-        text: 'อีเมล์หรือพาสเวิร์ดไม่ถูกต้อง',
-        icon: 'error',
-        confirmButtonText: 'Cool'
-      })
+
+    if (!this.loginForm.valid) {
+      return;
     } else {
       Swal.fire({
         title: 'ยินดีต้อนรับ',
-        text: 'เข้าสู่ระบบ คุณ ' + this.inputEmail,
+        text: 'เข้าสู่ระบบ' + ' ' + this.email,
         icon: 'success',
         confirmButtonText: 'Cool'
       })

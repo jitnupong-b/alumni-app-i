@@ -1,31 +1,42 @@
-<div class="row" style="margin-top: 100px;">
-    <div class="col-6 offset-3">
+<div class="row d-flex flex-column min-vh-100 align-items-center justify-content-center">
+    <div class="col-6">
         <div class="card">
             <div class="card-header">
                 <i class="fa fa-user-circle" aria-hidden="true"></i> กรุณาล็อกอินเข้าสู่ระบบ
             </div>
             <div class="card-body">
-                <form (ngSubmit)="onSubmitEmailPassword()">
+                <form (ngSubmit)="onSubmitEmailPassword()" [formGroup]="loginForm">
                     <div class="mb-3">
-                        <label for="exampleInputEmail1" class="form-label">Email address</label>
-                        <input type="email" required class="form-control" id="exampleInputEmail1" name="exampleInputEmail1"
-                            aria-describedby="emailHelp" [(ngModel)]="inputEmail">
-                        <div id="emailHelp" class="form-text">We'll never share your email with anyone else.
+                        <label for="" class="form-label">Email address</label>
+                        <input type="email" required class="form-control" formControlName="inputEmail" [(ngModel)]="email">
+                        <div class="form-text text-danger"
+                            *ngIf="loginForm.get('inputEmail').invalid && loginForm.get('inputEmail').errors.required">
+                            กรุณาระบุอีเมล์ชื่อผู้ใช้
+                        </div>
+                        <div class="form-text text-danger"
+                            *ngIf="loginForm.get('inputEmail').invalid && loginForm.get('inputEmail').errors.email">
+                            ชื่อผู้ใช้ควรจะเป็นอีเมล์
                         </div>
                     </div>
                     <div class="mb-3">
-                        <label for="exampleInputPassword1" class="form-label">Password</label>
-                        <input type="password" required class="form-control" id="exampleInputPassword1" [(ngModel)]="inputPassword" name="exampleInputPassword1">
+                        <label for="" class="form-label">Password</label>
+                        <input type="password" required class="form-control" formControlName="inputPassword" [(ngModel)]="password">
+                        <div class="form-text text-danger"
+                            *ngIf="loginForm.get('inputPassword')?.invalid && (loginForm.get('inputPassword')?.dirty || loginForm.get('inputPassword')?.touched) && loginForm.get('inputPassword')?.errors?.required">
+                            กรุณาระบุพาสเวิร์ด
+                        </div>
+                        <div class="form-text text-danger"
+                            *ngIf="loginForm.get('inputPassword')?.invalid && (loginForm.get('inputPassword')?.dirty || loginForm.get('inputPassword')?.touched) && loginForm.get('inputPassword')?.errors?.minlength">
+                        </div>
                     </div>
                     <div class="mb-3 form-check">
-                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                        <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                        <input type="checkbox" class="form-check-input" id="inputCheck">
+                        <label class="form-check-label" for="inputCheck">Check me out</label>
                     </div>
                     <button type="submit" class="btn btn-primary"><i class="fa fa-sign-in" aria-hidden="true"></i>
                         Submit</button>
                 </form>
             </div>
         </div>
-
     </div>
 </div>
